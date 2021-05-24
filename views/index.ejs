@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document).ready(function() {
+			const socket = io.connect();  //1. socket.io connection
+			$('form').submit(function() {   //4. getting the values after a form submission
+				socket.emit("posting_form", { 
+					name: $('form input[name="name"]').val(),
+					location: $('form select[name="location"]').val(),
+					language: $('form select[name="language"]').val(),
+					comment: $('form textarea[name="comment"]').val(),
+				});
+				return false;
+			});
+			socket.on('updated_message', function (data) { // 7. Getting the values of the form to the server and printing it out to the index file
+				$('#submitted_result').append("<p>You emitted the following information to the server: { name: '" + data.name + "', location: '" + data.location + "', language: '" + data.language + "', comment: '" + data.comment + "' }" );
+			});
+			socket.on('random_number', function (data) { // 9. Getting a random number to the server
+				$('#submitted_result').append('<p>Your lucky number emitted by the server is ' + data.randomNumber + '</p>');
+			});
+		});
+    </script>
+</head>
+<body>
+    <div id="submitted_result"></div>
+    <div class="container">
+        <form action="/submit-form" method="post">
+            <label for="name">Your Name: </label>
+            <input type="text" name="name" id="name">
+
+            <label for="location">Dojo Location: </label>
+            <select name="location" id="location">
+                <option value="Philippines">Philippines</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Malaysia">Malaysia</option>
+            </select>
+
+            <label for="language">Favorite Language: </label>
+            <select name="language" id="language">
+                <option value="Javascript">Javascript</option>
+                <option value="PHP">PHP</option>
+                <option value="Java">Java</option>
+            </select>
+            
+            <label for="comment">Comment(optional): </label>
+            <textarea name="comment" id="comment" cols="30" rows="5"></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

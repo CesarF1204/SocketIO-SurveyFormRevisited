@@ -1,0 +1,38 @@
+.container {
+    border: 5px solid black;
+    width: 500px; 
+    margin: 30px auto;
+    padding: 10px 50px;
+    box-shadow: 8px 8px 8px rgba(0,0,0,0.5);
+    background-color: whitesmoke;
+}
+form input, form select, label, textarea {
+    display: block;
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+}
+form select {
+    width: 238px;
+}
+form input {
+    width: 228px;
+}
+input[type=submit] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #2b78e4;
+    border: 1px solid black;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px #000;
+}
+input[type=submit]:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+}
+#submitted_result {
+    text-align: center;
+}
